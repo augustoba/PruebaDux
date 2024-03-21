@@ -1,30 +1,37 @@
 package com.dux.pruebatecnica.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
+@Table(name="EQUIPO")
 public class Equipo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotNull
+
+    @Column(name="NOMBRE")
+    @Size(min = 4, max = 50, message="Debe ingresar un minimo de 4 caracteres y maximo 50 para el campo NOMBRE")
+    private String nombre;
+
+    @Column(name="LIGA")
+    @Size(min = 4, max = 50, message="Debe ingresar un minimo de 4 caracteres y maximo 50 para el campo LIGA")
     private String liga;
-    @NotNull
+
+    @Column(name="PAIS")
+    @Size(min = 4, max = 20, message="Debe ingresar un minimo de 4 caracteres y maximo 20 para el campo PAIS")
     private String pais;
 
     public Equipo() {
     }
 
-    public Equipo(Integer id, String liga, String pais) {
+    public Equipo(Integer id, String nombre, String liga, String pais) {
         this.id = id;
+        this.nombre = nombre;
         this.liga = liga;
         this.pais = pais;
     }
-
 
     public Integer getId() {
         return id;
@@ -32,6 +39,14 @@ public class Equipo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getLiga() {
@@ -48,14 +63,5 @@ public class Equipo {
 
     public void setPais(String pais) {
         this.pais = pais;
-    }
-
-    @Override
-    public String toString() {
-        return "Equipo{" +
-                "id=" + id +
-                ", liga='" + liga + '\'' +
-                ", pais='" + pais + '\'' +
-                '}';
     }
 }
