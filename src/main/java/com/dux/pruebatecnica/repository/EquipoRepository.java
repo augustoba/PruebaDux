@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EquipoRepository extends JpaRepository<Equipo,Integer> {
 
+    Equipo findByNombre(String nombre);
 }
