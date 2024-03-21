@@ -2,29 +2,25 @@ package com.dux.pruebatecnica.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+
 @Entity
-@Table(name="EQUIPO")
-public class Equipo {
+@Table(name="LIGA")
+public class Liga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Size(min = 4, max = 50, message = "Debe ingresar un mínimo de 4 caracteres y máximo 50 para el campo EQUIPO")
     @Column(name="NOMBRE")
+    @Size(min = 4, max = 50, message = "Debe ingresar un mínimo de 4 caracteres y máximo 50 para el campo LIGA")
     private String nombre;
-    @ManyToOne
-    private Liga liga;
-    @ManyToOne
-    private Pais pais;
 
-    public Equipo() {
+    public Liga() {
     }
 
-    public Equipo(Integer id, String nombre, Liga liga, Pais pais) {
+    public Liga(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.liga = liga;
-        this.pais = pais;
     }
+
     public Integer getId() {
         return id;
     }
@@ -41,29 +37,11 @@ public class Equipo {
         this.nombre = nombre;
     }
 
-    public Liga getLiga() {
-        return liga;
-    }
-
-    public void setLiga(Liga liga) {
-        this.liga = liga;
-    }
-
-    public Pais getPais() {
-        return pais;
-    }
-
-    public void setPais(Pais pais) {
-        this.pais = pais;
-    }
-
     @Override
     public String toString() {
-        return "Equipo{" +
+        return "Liga{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", liga=" + liga +
-                ", pais=" + pais +
                 '}';
     }
 }
