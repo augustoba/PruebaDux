@@ -6,12 +6,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class EquipoController {
@@ -23,8 +20,7 @@ public class EquipoController {
 
     @PostMapping("/equipos")
     public ResponseEntity<Object> crearEquipo(@Valid  @RequestBody Equipo equipo,  BindingResult result) {
-        System.out.println(equipo.getLiga() + equipo.getPais() + "asdsad");
-        if (result.hasErrors()) {
+          if (result.hasErrors()) {
             List<String> errorList = result.getFieldErrors().stream().map(error -> error.getDefaultMessage()).toList();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorList);
         }
@@ -36,11 +32,26 @@ public class EquipoController {
         }
     }
 
-
     @GetMapping("/equipos")
     public ResponseEntity<Object> listarEquipos() {
             return ResponseEntity.status(HttpStatus.OK).body(equipoService.listarEquipos());
-        }
-
     }
+
+    @GetMapping("/equipos/{id}")
+    public ResponseEntity<Object> encontrarEquipoPorId(@PathVariable Integer id) {
+        Optional<Equipo> equipo = equipoService.findEquipoById(id);
+
+        if (equipo.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(equipo.get());
+        }else{
+            Map<String, Object> respuesta = new LinkedHashMap<>();
+            respuesta.put("mensaje","Equipo no encontrado");
+            respuesta.put("codigo",HttpStatus.NOT_FOUND.value());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+    }
+
+}
+
+
 
