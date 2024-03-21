@@ -5,7 +5,7 @@ import com.dux.pruebatecnica.repository.LigaRepository;
 
 public interface LigaService {
 
-    Liga crearLiga(Liga liga);
+    Liga crearLiga(String nombre);
 
     Liga buscarLigaPorNombre(String nombre);
 }

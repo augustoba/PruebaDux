@@ -7,6 +7,8 @@ import com.dux.pruebatecnica.repository.EquipoRepository;
 import com.dux.pruebatecnica.repository.LigaRepository;
 import com.dux.pruebatecnica.repository.PaisRepository;
 import com.dux.pruebatecnica.service.EquipoService;
+import com.dux.pruebatecnica.service.LigaService;
+import com.dux.pruebatecnica.service.PaisService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,14 +18,14 @@ import java.util.Optional;
 public class EquipoServiceImpl implements EquipoService {
 
     private final EquipoRepository equipoRepository;
-    private final LigaRepository ligaRepository;
-    private final PaisRepository paisRepository;
+    private final LigaService ligaService;
+    private final PaisService paisService;
 
 
-    public EquipoServiceImpl(EquipoRepository equipoRepository, LigaRepository ligaRepository, PaisRepository paisRepository) {
+    public EquipoServiceImpl(EquipoRepository equipoRepository, LigaService ligaService, PaisService paisService) {
         this.equipoRepository = equipoRepository;
-        this.ligaRepository = ligaRepository;
-        this.paisRepository = paisRepository;
+        this.ligaService = ligaService;
+        this.paisService = paisService;
     }
 
     @Override
@@ -33,17 +35,15 @@ public class EquipoServiceImpl implements EquipoService {
 
     @Override
     public Equipo crearEquipo(Equipo equipo){
-        Liga liga=ligaRepository.findByNombre(equipo.getLiga().getNombre());
-        Pais pais= paisRepository.findByNombre(equipo.getPais().getNombre());
+        Liga liga=ligaService.buscarLigaPorNombre(equipo.getLiga().getNombre());
+        Pais pais= paisService.buscarPaisPorNombre(equipo.getPais().getNombre());
 
         if (liga ==null){
-            ligaRepository.save(equipo.getLiga());
+            equipo.setLiga(ligaService.crearLiga(equipo.getLiga().getNombre()));
         }
         if (pais == null){
-            paisRepository.save(equipo.getPais());
+            equipo.setPais(paisService.crearPais(equipo.getPais().getNombre()));
         }
-        equipo.setLiga(liga);
-        equipo.setPais(pais);
 
         return equipoRepository.save(equipo);
     }

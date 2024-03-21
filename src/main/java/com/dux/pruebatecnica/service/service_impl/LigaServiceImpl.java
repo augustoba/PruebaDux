@@ -15,8 +15,9 @@ public class LigaServiceImpl implements LigaService {
         this.ligaRepository = ligaRepository;
     }
     @Override
-
-    public Liga crearLiga(Liga liga){
+    public Liga crearLiga(String nombre){
+        Liga liga = new Liga();
+        liga.setNombre(nombre);
         return ligaRepository.save(liga);
     }
     @Override
