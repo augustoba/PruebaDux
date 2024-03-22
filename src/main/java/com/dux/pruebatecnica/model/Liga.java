@@ -1,15 +1,14 @@
 package com.dux.pruebatecnica.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="LIGA")
+@Table(name = "LIGA")
 public class Liga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name="NOMBRE")
+    @Column(name = "NOMBRE")
     private String nombre;
 
     public Liga() {

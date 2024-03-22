@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -44,7 +45,6 @@ public class EquipoServiceImpl implements EquipoService {
         Liga liga=ligaService.buscarLigaPorNombre(equipoRequestDTO.getLiga());
         Pais pais= paisService.buscarPaisPorNombre(equipoRequestDTO.getPais());
 
-
         if (equipoRepository.findByNombre(equipoRequestDTO.getEquipo()) ==null){
             equipo.setNombre(equipoRequestDTO.getEquipo());
         }else{
@@ -67,5 +67,22 @@ public class EquipoServiceImpl implements EquipoService {
 
     @Override
     public Equipo encontrarPorNombre(String nombre){
-        return equipoRepository.findByNombre(nombre);    }
+        return equipoRepository.findByNombre(nombre);
+    }
+    @Override
+    public List<Equipo> equiposListaNombres(String nombre){
+        return equipoRepository.findByNombreEquipoLigaPais(nombre);
+    }
+    @Override
+    public void eliminarEquipo(Integer equipoId){
+        Optional<Equipo> equipo = findEquipoById(equipoId);
+        if (equipo.isPresent()){
+            equipoRepository.delete(equipo.get());
+        }else{
+            throw  new NoSuchElementException("equipo no encontrado");
+        }
+
+    }
+
+
 }

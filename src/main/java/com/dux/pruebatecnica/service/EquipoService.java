@@ -16,4 +16,8 @@ public interface EquipoService {
     List<EquipoResponseDTO> listarEquipos();
 
     Equipo encontrarPorNombre(String nombre);
+
+    List<Equipo> equiposListaNombres(String nombre);
+
+    void eliminarEquipo(Integer equipoId);
 }
