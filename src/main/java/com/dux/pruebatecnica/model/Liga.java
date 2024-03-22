@@ -10,7 +10,6 @@ public class Liga {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name="NOMBRE")
-    @Size(min = 4, max = 50, message = "Debe ingresar un mínimo de 4 caracteres y máximo 50 para el campo LIGA")
     private String nombre;
 
     public Liga() {

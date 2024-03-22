@@ -1,14 +1,14 @@
 package com.dux.pruebatecnica.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+
 @Entity
 @Table(name="EQUIPO")
 public class Equipo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Size(min = 4, max = 50, message = "Debe ingresar un mínimo de 4 caracteres y máximo 50 para el campo EQUIPO")
+
     @Column(name="NOMBRE")
     private String nombre;
     @ManyToOne

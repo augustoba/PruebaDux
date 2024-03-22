@@ -10,7 +10,6 @@ public class Pais {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name="NOMBRE")
-    @Size(min = 4, max = 20, message = "Debe ingresar un mínimo de 4 caracteres y máximo 20 para el campo PAIS")
     private String nombre;
 
     public Pais() {
