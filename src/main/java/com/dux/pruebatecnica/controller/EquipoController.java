@@ -45,8 +45,8 @@ public class EquipoController {
     }
 
     @GetMapping("/equipos/{id}")
-    public ResponseEntity<Object> encontrarEquipoPorId(@PathVariable Integer idEquipo) {
-        Optional<Equipo> equipo = equipoService.findEquipoById(idEquipo);
+    public ResponseEntity<Object> encontrarEquipoPorId(@PathVariable Integer id) {
+        Optional<Equipo> equipo = equipoService.findEquipoById(id);
 
         if (equipo.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(equipoMapper.toEquipoResponseDTO(equipo.get()));
