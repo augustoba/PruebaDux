@@ -12,16 +12,15 @@ import java.util.List;
 @Component
 @Mapper(componentModel = "spring")
 public interface EquipoMapper {
-            @Mapping(target = "nombre", source = "equipo")
+            @Mapping(target = "nombre", source = "nombre")
             @Mapping(target = "liga.nombre", source = "liga")
             @Mapping(target = "pais.nombre", source = "pais")
 
         Equipo toEquipoEntity(EquipoRequestDTO equipoRequestDTO);
             @Mapping(target = "id", source = "id")
-            @Mapping(target = "equipo", source = "nombre")
+            @Mapping(target = "nombre", source = "nombre")
             @Mapping(target = "liga", source = "liga.nombre")
             @Mapping(target = "pais", source = "pais.nombre")
-
-        EquipoResponseDTO toEquipoResponseDTO(Equipo equipo);
+            EquipoResponseDTO toEquipoResponseDTO(Equipo equipo);
     List<EquipoResponseDTO> toEquipoResponseDTOList(List<Equipo> equipos);
 }

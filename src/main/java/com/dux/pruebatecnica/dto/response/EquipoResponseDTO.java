@@ -3,7 +3,7 @@ package com.dux.pruebatecnica.dto.response;
 public class EquipoResponseDTO {
 
     private Integer id;
-    private String equipo;
+    private String nombre;
     private String pais;
     private String liga;
 
@@ -12,7 +12,7 @@ public class EquipoResponseDTO {
 
     public EquipoResponseDTO(Integer id, String equipo, String pais, String liga) {
         this.id = id;
-        this.equipo = equipo;
+        this.nombre = equipo;
         this.pais = pais;
         this.liga = liga;
     }
@@ -25,12 +25,12 @@ public class EquipoResponseDTO {
         this.id = id;
     }
 
-    public String getEquipo() {
-        return equipo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setEquipo(String equipo) {
-        this.equipo = equipo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getPais() {
@@ -53,7 +53,7 @@ public class EquipoResponseDTO {
     public String toString() {
         return "EquipoResponseDTO{" +
                 "id=" + id +
-                ", equipo='" + equipo + '\'' +
+                ", equipo='" + nombre + '\'' +
                 ", pais='" + pais + '\'' +
                 ", liga='" + liga + '\'' +
                 '}';

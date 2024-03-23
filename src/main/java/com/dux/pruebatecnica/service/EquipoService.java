@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface EquipoService {
     Optional<Equipo> findEquipoById(Integer equipoId);
 
-
     EquipoResponseDTO crearEquipo(EquipoRequestDTO equipoRequestDTO);
 
     List<EquipoResponseDTO> listarEquipos();
@@ -20,4 +19,6 @@ public interface EquipoService {
     List<Equipo> equiposListaNombres(String nombre);
 
     void eliminarEquipo(Integer equipoId);
+
+    EquipoResponseDTO actualizarEquipo(Integer idEquipo, EquipoRequestDTO equipoRequestDTO);
 }

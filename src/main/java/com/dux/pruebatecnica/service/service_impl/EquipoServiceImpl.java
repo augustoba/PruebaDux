@@ -3,6 +3,8 @@ package com.dux.pruebatecnica.service.service_impl;
 import com.dux.pruebatecnica.dto.mapper.EquipoMapper;
 import com.dux.pruebatecnica.dto.request.EquipoRequestDTO;
 import com.dux.pruebatecnica.dto.response.EquipoResponseDTO;
+import com.dux.pruebatecnica.exception.EquipoExistenteException;
+import com.dux.pruebatecnica.exception.EquipoNoEncontradoException;
 import com.dux.pruebatecnica.model.Equipo;
 import com.dux.pruebatecnica.model.Liga;
 import com.dux.pruebatecnica.model.Pais;
@@ -14,7 +16,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -45,10 +46,10 @@ public class EquipoServiceImpl implements EquipoService {
         Liga liga=ligaService.buscarLigaPorNombre(equipoRequestDTO.getLiga());
         Pais pais= paisService.buscarPaisPorNombre(equipoRequestDTO.getPais());
 
-        if (equipoRepository.findByNombre(equipoRequestDTO.getEquipo()) ==null){
-            equipo.setNombre(equipoRequestDTO.getEquipo());
+        if (equipoRepository.findByNombre(equipoRequestDTO.getNombre()) ==null){
+            equipo.setNombre(equipoRequestDTO.getNombre());
         }else{
-            throw new RuntimeException("El equipo ya existe en la base de datos.");
+            throw new EquipoExistenteException();
         }
         if (liga ==null) liga=ligaService.crearLiga(equipoRequestDTO.getLiga());
         equipo.setLiga(liga);
@@ -79,7 +80,38 @@ public class EquipoServiceImpl implements EquipoService {
         if (equipo.isPresent()){
             equipoRepository.delete(equipo.get());
         }else{
-            throw  new NoSuchElementException("equipo no encontrado");
+            throw  new EquipoNoEncontradoException();
+        }
+    }
+@Override
+    public EquipoResponseDTO actualizarEquipo(Integer idEquipo, EquipoRequestDTO equipoRequestDTO){
+        Optional<Equipo> equipoObj = equipoRepository.findById(idEquipo);
+        Pais pais =  paisService.buscarPaisPorNombre(equipoRequestDTO.getPais());
+        Liga liga = ligaService.buscarLigaPorNombre(equipoRequestDTO.getLiga());
+
+        if (equipoObj.isPresent()){
+            Equipo equipoViejo = equipoObj.get();
+            Equipo equipoRequest=equipoRepository.findByNombre(equipoRequestDTO.getNombre());
+
+           if (equipoRequest==null){
+               equipoViejo.setNombre(equipoRequestDTO.getNombre());
+           }else {
+               throw new EquipoExistenteException();
+           }
+           if (pais == null){
+               equipoViejo.setPais(paisService.crearPais(equipoRequestDTO.getPais()));
+           }else {
+               equipoViejo.setPais(pais);
+           }
+           if (liga== null){
+               equipoViejo.setLiga(ligaService.crearLiga(equipoRequestDTO.getLiga()));
+           }else {
+               equipoViejo.setLiga(liga);
+           }
+            equipoRepository.save(equipoViejo);
+            return equipoMapper.toEquipoResponseDTO(equipoViejo);
+        }else {
+            throw  new EquipoNoEncontradoException();
         }
 
     }

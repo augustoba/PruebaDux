@@ -21,6 +21,11 @@ public class EquipoException  {
         respuesta.put("codigo", HttpStatus.BAD_REQUEST.value());
         return respuesta;
     }
-
+    public static Map<String, Object> respuestaErrorEquipoExistente() {
+        Map<String, Object> respuesta = new LinkedHashMap<>();
+        respuesta.put("mensaje", "El equipo ya existe en la base de datos.");
+        respuesta.put("codigo", HttpStatus.BAD_REQUEST.value());
+        return respuesta;
+    }
 }
 
