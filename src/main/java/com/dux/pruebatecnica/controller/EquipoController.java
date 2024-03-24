@@ -8,6 +8,7 @@ import com.dux.pruebatecnica.exception.EquipoExistenteException;
 import com.dux.pruebatecnica.model.Equipo;
 import com.dux.pruebatecnica.service.EquipoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import static com.dux.pruebatecnica.exception.EquipoException.errorRespuesta;
 import static com.dux.pruebatecnica.exception.EquipoException.respuestaErrorValid;
 
 @RestController
+@Tag(name = "Api gestión de equipos de fútbol--", description = "Controlador para gestionar equipos (crear, actualizar, eliminar, listar y buscar.)")
 public class EquipoController {
     private final EquipoService equipoService;
     private final EquipoMapper equipoMapper;
