@@ -3,8 +3,11 @@ package com.dux.pruebatecnica.controller;
 import com.dux.pruebatecnica.dto.mapper.EquipoMapper;
 import com.dux.pruebatecnica.dto.request.EquipoRequestDTO;
 import com.dux.pruebatecnica.dto.response.EquipoResponseDTO;
+import com.dux.pruebatecnica.exception.EquipoException;
+import com.dux.pruebatecnica.exception.EquipoExistenteException;
 import com.dux.pruebatecnica.model.Equipo;
 import com.dux.pruebatecnica.service.EquipoService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +26,7 @@ public class EquipoController {
         this.equipoService = equipoService;
         this.equipoMapper = equipoMapper;
     }
-
+    @Operation(summary = "CREAR EQUIPOS")
     @PostMapping("/equipos")
     public ResponseEntity<Object> crearEquipo(@Valid @RequestBody EquipoRequestDTO equipoRequestDTO, BindingResult result) {
 
@@ -39,12 +42,14 @@ public class EquipoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorRespuesta(e.getMessage(), HttpStatus.BAD_REQUEST));
         }
     }
+    @Operation(summary = "LISTAR EQUIPOS")
     @GetMapping("/equipos")
     public ResponseEntity<Object> listarEquipos() {
         return ResponseEntity.status(HttpStatus.OK).body(equipoService.listarEquipos());
     }
 
     @GetMapping("/equipos/{id}")
+    @Operation(summary = "ENCONTRAR EQUIPO POR ID")
     public ResponseEntity<Object> encontrarEquipoPorId(@PathVariable Integer id) {
         Optional<Equipo> equipo = equipoService.findEquipoById(id);
 
@@ -54,7 +59,7 @@ public class EquipoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorRespuesta("Equipo no encontrado", HttpStatus.NOT_FOUND));
         }
     }
-
+    @Operation(summary = "BUSCAR EQUIPOS POR NOMBRE")
     @GetMapping("/equipos/buscar")
     public ResponseEntity<Object> buscarEquiposPorNombre(@RequestParam("nombre") String nombre) {
         List<Equipo> equipos = equipoService.equiposListaNombres(nombre);
@@ -64,6 +69,7 @@ public class EquipoController {
         return ResponseEntity.status(HttpStatus.OK).body(equipoMapper.toEquipoResponseDTOList(equipos));
     }
 
+    @Operation(summary = "ELIMINAR EQUIPO POR ID")
     @DeleteMapping("/equipos/{id}")
     public ResponseEntity<Object> eliminarEquipo(@PathVariable Integer id) {
         try {
@@ -71,6 +77,24 @@ public class EquipoController {
             return ResponseEntity.noContent().build();
         } catch (NoSuchElementException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorRespuesta("Equipo no encontrado",HttpStatus.NOT_FOUND));
+        }
+    }
+    @Operation(summary = "ACTUALIZAR EQUIPO")
+    @PutMapping("/equipos/{id}")
+    public ResponseEntity<Object> actualizarEquipo(@PathVariable Integer id, @Valid  @RequestBody EquipoRequestDTO equipoRequestDTO, BindingResult result) {
+
+        Optional<Equipo> equipoExistente = equipoService.findEquipoById(id);
+        if (!equipoExistente.isPresent()) {
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorRespuesta("Equipo no encontrado",HttpStatus.NOT_FOUND));
+        }
+        if (result.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(EquipoException.respuestaErrorValid(result));
+        }
+        try {
+            EquipoResponseDTO equipoActualizado = equipoService.actualizarEquipo(id, equipoRequestDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(equipoActualizado);
+        } catch (EquipoExistenteException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.existeEnDB());
         }
     }
 
