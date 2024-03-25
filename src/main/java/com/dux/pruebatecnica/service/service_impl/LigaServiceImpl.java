@@ -27,9 +27,11 @@ public class LigaServiceImpl implements LigaService {
         Liga ligaOpt = buscarLigaPorNombre(nombre);
 
         if (ligaOpt == null){
+
             Liga liga = new Liga();
             liga.setNombre(nombre);
             return ligaRepository.save(liga);
-        }else     return ligaOpt;
+
+        }else  return ligaOpt;
     }
 }
