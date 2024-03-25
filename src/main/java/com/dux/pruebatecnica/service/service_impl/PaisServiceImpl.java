@@ -14,15 +14,22 @@ public class PaisServiceImpl implements PaisService {
         this.paisRepository = paisRepository;
     }
 
- @Override
-    public Pais crearPais(String nombre){
-        Pais pais = new Pais();
-        pais.setNombre(nombre);
-        return paisRepository.save(pais);
-    }
+
     @Override
     public Pais buscarPaisPorNombre(String nombre){
         return paisRepository.findByNombre(nombre);
     }
 
+    @Override
+    public Pais buscaryCrearPais(String nombre){
+
+        Pais paisOpt = buscarPaisPorNombre(nombre);
+
+        if (paisOpt == null){
+            Pais pais = new Pais();
+            pais.setNombre(nombre);
+            return paisRepository.save(pais);
+        }else  return paisOpt;
+
+    }
 }

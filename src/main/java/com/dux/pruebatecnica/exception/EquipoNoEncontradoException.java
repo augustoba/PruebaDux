@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class EquipoNoEncontradoException  extends RuntimeException  {
+
     public EquipoNoEncontradoException() {
         super("equipo no encontrado");
     }

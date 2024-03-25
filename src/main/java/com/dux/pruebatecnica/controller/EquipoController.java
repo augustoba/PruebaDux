@@ -5,6 +5,7 @@ import com.dux.pruebatecnica.dto.request.EquipoRequestDTO;
 import com.dux.pruebatecnica.dto.response.EquipoResponseDTO;
 import com.dux.pruebatecnica.exception.EquipoException;
 import com.dux.pruebatecnica.exception.EquipoExistenteException;
+import com.dux.pruebatecnica.exception.EquipoNoEncontradoException;
 import com.dux.pruebatecnica.model.Equipo;
 import com.dux.pruebatecnica.service.EquipoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +33,9 @@ public class EquipoController {
     @PostMapping("/equipos")
     public ResponseEntity<Object> crearEquipo(@Valid @RequestBody EquipoRequestDTO equipoRequestDTO, BindingResult result) {
 
+        if (equipoService.encontrarPorNombre(equipoRequestDTO.getNombre()) !=null ){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorRespuesta("El equipo ya existe en la base de datos.",HttpStatus.BAD_REQUEST));
+        }
         if (result.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuestaErrorValid(result));
         }
@@ -77,8 +81,8 @@ public class EquipoController {
         try {
             equipoService.eliminarEquipo(id);
             return ResponseEntity.noContent().build();
-        } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorRespuesta("Equipo no encontrado",HttpStatus.NOT_FOUND));
+        }catch (EquipoNoEncontradoException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.noEncontrado());
         }
     }
     @Operation(summary = "ACTUALIZAR EQUIPO")

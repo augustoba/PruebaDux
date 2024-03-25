@@ -42,22 +42,22 @@ public class EquipoServiceImpl implements EquipoService {
     @Override
     @Transactional
     public EquipoResponseDTO crearEquipo(EquipoRequestDTO equipoRequestDTO){
+
         Equipo equipo = new Equipo();
-        Liga liga=ligaService.buscarLigaPorNombre(equipoRequestDTO.getLiga());
+        Liga liga=ligaService.buscaryCrearLiga(equipoRequestDTO.getLiga());
         Pais pais= paisService.buscarPaisPorNombre(equipoRequestDTO.getPais());
 
         if (equipoRepository.findByNombre(equipoRequestDTO.getNombre()) ==null){
-            equipo.setNombre(equipoRequestDTO.getNombre());
-        }else{
-            throw new EquipoExistenteException();
-        }
-        if (liga ==null) liga=ligaService.crearLiga(equipoRequestDTO.getLiga());
-        equipo.setLiga(liga);
-        if (pais == null) pais=paisService.crearPais(equipoRequestDTO.getPais());
-        equipo.setPais(pais);
-        equipoRepository.save(equipo);
 
-        return equipoMapper.toEquipoResponseDTO(equipo);
+                equipo.setNombre(equipoRequestDTO.getNombre());
+                equipo.setPais(pais);
+                equipo.setLiga(liga);
+                equipo.setPais(pais);
+                equipoRepository.save(equipo);
+
+        }else  throw new EquipoExistenteException();
+
+    return equipoMapper.toEquipoResponseDTO(equipo);
     }
 
     @Override
@@ -68,26 +68,29 @@ public class EquipoServiceImpl implements EquipoService {
 
     @Override
     public Equipo encontrarPorNombre(String nombre){
+
         return equipoRepository.findByNombre(nombre);
     }
     @Override
     public List<Equipo> equiposListaNombres(String nombre){
+
         return equipoRepository.findByNombreEquipoLigaPais(nombre);
     }
     @Override
     public void eliminarEquipo(Integer equipoId){
+
         Optional<Equipo> equipo = findEquipoById(equipoId);
+
         if (equipo.isPresent()){
             equipoRepository.delete(equipo.get());
-        }else{
-            throw  new EquipoNoEncontradoException();
-        }
+        }else throw  new EquipoNoEncontradoException();
     }
-@Override
+    @Override
     public EquipoResponseDTO actualizarEquipo(Integer idEquipo, EquipoRequestDTO equipoRequestDTO){
+
         Optional<Equipo> equipoObj = equipoRepository.findById(idEquipo);
-        Pais pais =  paisService.buscarPaisPorNombre(equipoRequestDTO.getPais());
-        Liga liga = ligaService.buscarLigaPorNombre(equipoRequestDTO.getLiga());
+        Pais pais =  paisService.buscaryCrearPais(equipoRequestDTO.getPais());
+        Liga liga = ligaService.buscaryCrearLiga(equipoRequestDTO.getLiga());
 
         if (equipoObj.isPresent()){
             Equipo equipoViejo = equipoObj.get();
@@ -95,26 +98,12 @@ public class EquipoServiceImpl implements EquipoService {
 
            if (equipoRequest==null){
                equipoViejo.setNombre(equipoRequestDTO.getNombre());
-           }else {
-               throw new EquipoExistenteException();
-           }
-           if (pais == null){
-               equipoViejo.setPais(paisService.crearPais(equipoRequestDTO.getPais()));
-           }else {
                equipoViejo.setPais(pais);
-           }
-           if (liga== null){
-               equipoViejo.setLiga(ligaService.crearLiga(equipoRequestDTO.getLiga()));
-           }else {
                equipoViejo.setLiga(liga);
-           }
-            equipoRepository.save(equipoViejo);
-            return equipoMapper.toEquipoResponseDTO(equipoViejo);
-        }else {
-            throw  new EquipoNoEncontradoException();
-        }
+               equipoRepository.save(equipoViejo);
+               return equipoMapper.toEquipoResponseDTO(equipoViejo);
+           }else  throw new EquipoExistenteException();
 
+        }else throw  new EquipoNoEncontradoException();
     }
-
-
 }

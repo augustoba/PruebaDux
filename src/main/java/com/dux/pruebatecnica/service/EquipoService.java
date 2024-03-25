@@ -3,6 +3,9 @@ package com.dux.pruebatecnica.service;
 import com.dux.pruebatecnica.dto.request.EquipoRequestDTO;
 import com.dux.pruebatecnica.dto.response.EquipoResponseDTO;
 import com.dux.pruebatecnica.model.Equipo;
+import jakarta.transaction.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +13,8 @@ import java.util.Optional;
 public interface EquipoService {
     Optional<Equipo> findEquipoById(Integer equipoId);
 
+
+    @Transactional
     EquipoResponseDTO crearEquipo(EquipoRequestDTO equipoRequestDTO);
 
     List<EquipoResponseDTO> listarEquipos();

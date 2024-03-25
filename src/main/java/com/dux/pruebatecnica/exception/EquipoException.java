@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class EquipoException  {
 
+
+
     public static Map<String, Object> errorRespuesta(String mensaje, HttpStatus status) {
         Map<String, Object> respuesta = new LinkedHashMap<>();
         respuesta.put("mensaje", mensaje);
