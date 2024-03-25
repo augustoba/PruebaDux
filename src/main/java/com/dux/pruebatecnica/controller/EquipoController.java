@@ -61,9 +61,8 @@ public class EquipoController {
 
         if (equipo.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(equipoMapper.toEquipoResponseDTO(equipo.get()));
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorRespuesta("Equipo no encontrado", HttpStatus.NOT_FOUND));
-        }
+        } else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorRespuesta("Equipo no encontrado", HttpStatus.NOT_FOUND));
+
     }
     @Operation(summary = "BUSCAR EQUIPOS POR NOMBRE")
     @GetMapping("/equipos/buscar")
@@ -71,8 +70,8 @@ public class EquipoController {
         List<Equipo> equipos = equipoService.equiposListaNombres(nombre);
         if (equipos.isEmpty()){
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorRespuesta("Equipo no encontrado",HttpStatus.NOT_FOUND));
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(equipoMapper.toEquipoResponseDTOList(equipos));
+        }else  return ResponseEntity.status(HttpStatus.OK).body(equipoMapper.toEquipoResponseDTOList(equipos));
+
     }
 
     @Operation(summary = "ELIMINAR EQUIPO POR ID")
@@ -90,12 +89,12 @@ public class EquipoController {
     public ResponseEntity<Object> actualizarEquipo(@PathVariable Integer id, @Valid  @RequestBody EquipoRequestDTO equipoRequestDTO, BindingResult result) {
 
         Optional<Equipo> equipoExistente = equipoService.findEquipoById(id);
-        if (!equipoExistente.isPresent()) {
+        if (!equipoExistente.isPresent())
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorRespuesta("Equipo no encontrado",HttpStatus.NOT_FOUND));
-        }
-        if (result.hasErrors()) {
+
+        if (result.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(EquipoException.respuestaErrorValid(result));
-        }
+
         try {
             EquipoResponseDTO equipoActualizado = equipoService.actualizarEquipo(id, equipoRequestDTO);
             return ResponseEntity.status(HttpStatus.OK).body(equipoActualizado);
@@ -103,8 +102,5 @@ public class EquipoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.existeEnDB());
         }
     }
-
-
-
 }
 

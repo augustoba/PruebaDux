@@ -45,14 +45,13 @@ public class EquipoServiceImpl implements EquipoService {
 
         Equipo equipo = new Equipo();
         Liga liga=ligaService.buscaryCrearLiga(equipoRequestDTO.getLiga());
-        Pais pais= paisService.buscarPaisPorNombre(equipoRequestDTO.getPais());
+        Pais pais= paisService.buscaryCrearPais(equipoRequestDTO.getPais());
 
         if (equipoRepository.findByNombre(equipoRequestDTO.getNombre()) ==null){
 
                 equipo.setNombre(equipoRequestDTO.getNombre());
                 equipo.setPais(pais);
                 equipo.setLiga(liga);
-                equipo.setPais(pais);
                 equipoRepository.save(equipo);
 
         }else  throw new EquipoExistenteException();

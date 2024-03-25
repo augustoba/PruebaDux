@@ -6,11 +6,11 @@ import com.dux.pruebatecnica.service.service_impl.PaisServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
  class PaisServiceImplTest {
@@ -48,7 +48,7 @@ import static org.mockito.Mockito.*;
 
             Pais resultado = paisService.buscarPaisPorNombre(nombre);
 
-            assertEquals(null, resultado);
+            assertNull(resultado);
             verify(paisRepository, times(1)).findByNombre(nombre);
         }
 
@@ -69,7 +69,7 @@ import static org.mockito.Mockito.*;
         }
 
      @Test
-     public void buscaryCrearPais() {
+      void buscaryCrearPais() {
          String nombre = "Nueva Zelanda";
 
          Pais mockPais = new Pais();

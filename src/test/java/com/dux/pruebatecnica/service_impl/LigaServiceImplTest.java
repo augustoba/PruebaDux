@@ -63,7 +63,7 @@ class LigaServiceImplTest {
     }
 
     @Test
-    public void buscaryCrearLigaPersistirNuevaLiga() {
+    void buscaryCrearLigaPersistirNuevaLiga() {
        String nombre = "Super Liga";
 
        Liga mockLiga = new Liga();

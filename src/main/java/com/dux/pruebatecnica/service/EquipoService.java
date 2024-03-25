@@ -4,8 +4,7 @@ import com.dux.pruebatecnica.dto.request.EquipoRequestDTO;
 import com.dux.pruebatecnica.dto.response.EquipoResponseDTO;
 import com.dux.pruebatecnica.model.Equipo;
 import jakarta.transaction.Transactional;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+
 
 import java.util.List;
 import java.util.Optional;

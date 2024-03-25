@@ -2,8 +2,6 @@ package com.dux.pruebatecnica.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
