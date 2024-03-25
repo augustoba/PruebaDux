@@ -20,7 +20,6 @@ import static com.dux.pruebatecnica.exception.EquipoException.errorRespuesta;
 import static com.dux.pruebatecnica.exception.EquipoException.respuestaErrorValid;
 
 @RestController
-@Tag(name = "Api gestión de equipos de fútbol--", description = "Controlador para gestionar equipos (crear, actualizar, eliminar, listar y buscar.)")
 public class EquipoController {
     private final EquipoService equipoService;
     private final EquipoMapper equipoMapper;
