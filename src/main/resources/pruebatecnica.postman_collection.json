@@ -30,7 +30,16 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"url": "http://localhost:8080/auth/login"
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"username\":\"test\",\r\n   \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/auth/register/adm"
 			},
 			"response": []
 		},
@@ -41,7 +50,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \"username\":\"juan\",\r\n   \"password\": \"12345\"\r\n}",
+					"raw": "{\r\n   \"username\":\"test\",\r\n   \"password\": \"12345\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,14 +81,14 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmbGFuZGlAZ3lsZ3JvdXAuY29tIiwicm9sZXMiOiJST0xFX2FkbWluIiwiaWQiOjYsImV4cCI6MTcwNzk2NTEzMX0.VdomUihme2fVnhuNvLedE9-Dp4z6e2huNL75MjE6PUJ9x726yeUC28meSDW6FSsxlhH1VtYrsl6puLPp1RTZEg"
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzExNDU2OTY5LCJleHAiOjE3MTE0NTcyNjl9.nyLFRdi1W3sM39E2p3x0xg0pzFFQC57RgSngG7r02ymWgMuO71dpVod-6qQjcmlR8-xlmA-VCmYfE9DYsbnEQA"
 					}
 				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n \"nombre\": \"River\",\r\n \"pais\": \"Argentina\",\r\n \"liga\": \"super liga\"  \r\n}",
+					"raw": "{\r\n \"nombre\": \"River Plate\",\r\n \"pais\": \"Argentina\",\r\n \"liga\": \"super liga\"  \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -94,19 +103,31 @@
 		{
 			"name": "LISTAR EQUIPOS",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzExNDU3MzQxLCJleHAiOjE3MTE0NTc2NDF9.GuqtNjWcJPFG-ThSHrmbYbo9yUPeeiGm4HofHF2SyWIfvEhdM63MDJWTLP6u1OzBhU3tZizYGfVVXeYQWwiXkg"
+					}
+				},
 				"method": "GET",
 				"header": [],
-				"url": ""
+				"url": "http://localhost:8080/equipos"
 			},
 			"response": []
 		},
 		{
 			"name": "BUSCAR POR NOMBRE",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzExNDU2OTY5LCJleHAiOjE3MTE0NTcyNjl9.nyLFRdi1W3sM39E2p3x0xg0pzFFQC57RgSngG7r02ymWgMuO71dpVod-6qQjcmlR8-xlmA-VCmYfE9DYsbnEQA"
+					}
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/equipos/buscar?nombre=atl",
+					"raw": "http://localhost:8080/equipos/buscar?nombre=river",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -119,7 +140,7 @@
 					"query": [
 						{
 							"key": "nombre",
-							"value": "atl"
+							"value": "river"
 						}
 					]
 				}
@@ -132,6 +153,12 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzExNDU2OTY5LCJleHAiOjE3MTE0NTcyNjl9.nyLFRdi1W3sM39E2p3x0xg0pzFFQC57RgSngG7r02ymWgMuO71dpVod-6qQjcmlR8-xlmA-VCmYfE9DYsbnEQA"
+					}
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -143,34 +170,46 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/equipos/24"
+				"url": "http://localhost:8080/equipos/1"
 			},
 			"response": []
 		},
 		{
 			"name": "ELIMINAR",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzExNDU2OTY5LCJleHAiOjE3MTE0NTcyNjl9.nyLFRdi1W3sM39E2p3x0xg0pzFFQC57RgSngG7r02ymWgMuO71dpVod-6qQjcmlR8-xlmA-VCmYfE9DYsbnEQA"
+					}
+				},
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8080/equipos/24"
+				"url": "http://localhost:8080/equipos/1"
 			},
 			"response": []
 		},
 		{
 			"name": "ACTUALIZAR",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzExNDU2OTY5LCJleHAiOjE3MTE0NTcyNjl9.nyLFRdi1W3sM39E2p3x0xg0pzFFQC57RgSngG7r02ymWgMuO71dpVod-6qQjcmlR8-xlmA-VCmYfE9DYsbnEQA"
+					}
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n \"nombre\": \"Riverci\",\r\n \"pais\": \"Argentina\",\r\n\"liga\": \"super liga\"  \r\n}",
+					"raw": "{\r\n \"nombre\": \"Boca Juniors\",\r\n \"pais\": \"Argentina\",\r\n\"liga\": \"super liga\"  \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/equipos/1"
+				"url": "http://localhost:8080/equipos/24"
 			},
 			"response": []
 		}
