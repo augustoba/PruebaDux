@@ -66,14 +66,33 @@ INSERT INTO Equipo (nombre, liga_id, pais_id) VALUES
                                                       ('SSC Napoli', 3, 3),
                                                       ('Atlético Madrid', 1, 1);
 
+DROP TABLE IF EXISTS ROLE;
+
+CREATE TABLE ROLE (
+                      id_role BIGINT AUTO_INCREMENT PRIMARY KEY,
+                      name VARCHAR(255) NOT NULL
+);
+
+INSERT INTO ROLE (name) VALUES ('ADMIN');
+
 DROP TABLE IF EXISTS USUARIO;
 
 CREATE TABLE USUARIO (
-                         id INT AUTO_INCREMENT PRIMARY KEY,
-                         username VARCHAR(100) NOT NULL,
-                         password VARCHAR(255) NOT NULL,
-                         role VARCHAR(50)
+                         id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+                         username VARCHAR(255) NOT NULL,
+                         password VARCHAR(255) NOT NULL
 );
-INSERT INTO USUARIO (username, password,role)
-VALUES('augusto','2a$10$wWlPSYC2pzSY4Jc.yDLT6OwxUEY69ax4IH2eVO5u16LRQ0aSWox3m','ADMINISTRADOR'),
-      ('test','$2a$10$e.VyoXQECNyc46761HhRAO31asO6Mh5hjifoTrsr/UJDP8.ncMWyG','ADMINISTRADOR')
+INSERT INTO USUARIO (username, password) VALUES ('augusto','$2a$10$.jZLYD8L0pHD2YKKLY.kQOGkD.CIbIe9ykQXEFkYxr1dn6dE2kdu2'), ('test','$2a$10$.jZLYD8L0pHD2YKKLY.kQOGkD.CIbIe9ykQXEFkYxr1dn6dE2kdu2');
+DROP TABLE IF EXISTS USUARIOS_ROLES;
+
+CREATE TABLE USUARIOS_ROLES (
+                                USUARIO_ID INT,
+                                ROLE_ID INT,
+                                PRIMARY KEY (USUARIO_ID, ROLE_ID)
+);
+
+INSERT INTO USUARIOS_ROLES (USUARIO_ID, ROLE_ID)
+VALUES
+    (1, 1),
+    (2, 1);
+
